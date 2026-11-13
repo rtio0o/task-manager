@@ -9,8 +9,28 @@ const filters = [
     { value: "completed", label: "Finalizate" }
 ];
 
+const storageKey = "task-manager-tasks";
+
+function loadTasks() {
+    try {
+        const savedTasks = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
+        if (!Array.isArray(savedTasks)) {
+            return [];
+        }
+
+        return savedTasks.filter((task) =>
+            typeof task?.id === "string"
+            && typeof task.title === "string"
+            && typeof task.completed === "boolean"
+        );
+    } catch {
+        return [];
+    }
+}
+
 function App() {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(loadTasks);
+    const [storageError, setStorageError] = useState(false);
     const [filter, setFilter] = useState("all");
     const visibleTasks = tasks.filter((task) => {
         if (filter === "active") {
@@ -25,6 +45,17 @@ function App() {
     });
     const completedCount = tasks.filter((task) => task.completed).length;
 
+    function saveTasks(nextTasks) {
+        setTasks(nextTasks);
+
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(nextTasks));
+            setStorageError(false);
+        } catch {
+            setStorageError(true);
+        }
+    }
+
     function addTask(title) {
         const newTask = {
             id: crypto.randomUUID(),
@@ -32,11 +63,11 @@ function App() {
             completed: false
         };
 
-        setTasks((previousTasks) => [...previousTasks, newTask]);
+        saveTasks([...tasks, newTask]);
     }
 
     function toggleTask(id) {
-        setTasks((previousTasks) => previousTasks.map((task) => {
+        saveTasks(tasks.map((task) => {
             if (task.id === id) {
                 return { ...task, completed: !task.completed };
             }
@@ -46,7 +77,7 @@ function App() {
     }
 
     function renameTask(id, title) {
-        setTasks((previousTasks) => previousTasks.map((task) => {
+        saveTasks(tasks.map((task) => {
             if (task.id === id) {
                 return { ...task, title };
             }
@@ -56,7 +87,7 @@ function App() {
     }
 
     function deleteTask(id) {
-        setTasks((previousTasks) => previousTasks.filter((task) => task.id !== id));
+        saveTasks(tasks.filter((task) => task.id !== id));
     }
 
     return (
@@ -67,6 +98,11 @@ function App() {
                 <span>Finalizate: {completedCount}</span>
             </div>
             <TaskForm onAddTask={addTask} />
+            {storageError && (
+                <p className="empty" role="status">
+                    Sarcinile nu au putut fi salvate în browser.
+                </p>
+            )}
             <div className="filters" role="group" aria-label="Filtrează sarcinile">
                 {filters.map(({ value, label }) => (
                     <button
