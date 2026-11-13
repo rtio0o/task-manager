@@ -1,0 +1,154 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 48px 16px;
+    background: #eef2f7;
+    color: #1d2939;
+    font-family: "Inter", system-ui, sans-serif;
+}
+
+main {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 28px;
+    border: 1px solid #dce3ed;
+    border-radius: 12px;
+    background: white;
+}
+
+h1 {
+    margin: 0 0 12px;
+    font-size: 30px;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-bottom: 24px;
+    color: #46556b;
+    font-size: 14px;
+}
+
+.task-form > label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-row, .filters {
+    display: flex;
+    gap: 8px;
+}
+
+.form-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #8a98ad;
+    border-radius: 6px;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    padding: 9px 13px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: #2556a6;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d468c;
+}
+
+.filters {
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.filters button, button.delete {
+    background: white;
+    border-color: #c6cfdd;
+    color: #34445c;
+}
+
+.filters button[aria-pressed="true"] {
+    border-color: #2556a6;
+    background: #edf3ff;
+    color: #204d95;
+}
+
+.filters button:hover {
+    background: #f1f5fb;
+}
+
+ul {
+    padding: 0;
+    margin: 16px 0 0;
+    list-style: none;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #e4e9f1;
+}
+
+.task label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.task input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: #2556a6;
+}
+
+.task .completed span {
+    text-decoration: line-through;
+    color: #526178;
+}
+
+button.delete:hover {
+    background: #fff2f1;
+    color: #9d2626;
+}
+
+.empty {
+    margin: 20px 0 0;
+    color: #526178;
+}
+
+@media (max-width: 440px) {
+    body {
+        padding-top: 20px;
+    }
+
+    main {
+        padding: 18px;
+    }
+
+    .form-row {
+        flex-wrap: wrap;
+    }
+
+    .form-row input {
+        flex-basis: 100%;
+    }
+}
