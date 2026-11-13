@@ -45,6 +45,16 @@ function App() {
         }));
     }
 
+    function renameTask(id, title) {
+        setTasks((previousTasks) => previousTasks.map((task) => {
+            if (task.id === id) {
+                return { ...task, title };
+            }
+
+            return task;
+        }));
+    }
+
     function deleteTask(id) {
         setTasks((previousTasks) => previousTasks.filter((task) => task.id !== id));
     }
@@ -82,6 +92,7 @@ function App() {
                         key={task.id}
                         task={task}
                         onToggle={toggleTask}
+                        onRename={renameTask}
                         onDelete={deleteTask}
                     />
                 ))}

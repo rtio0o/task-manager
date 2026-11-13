@@ -39,7 +39,7 @@ h1 {
     font-weight: 600;
 }
 
-.form-row, .filters {
+.form-row, .filters, .task-actions {
     display: flex;
     gap: 8px;
 }
@@ -65,8 +65,13 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button:not(:disabled):hover {
     background: #1d468c;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: default;
 }
 
 .filters {
@@ -74,7 +79,7 @@ button:hover {
     margin-top: 20px;
 }
 
-.filters button, button.delete {
+.filters button, button.secondary, button.delete {
     background: white;
     border-color: #c6cfdd;
     color: #34445c;
@@ -86,7 +91,7 @@ button:hover {
     color: #204d95;
 }
 
-.filters button:hover {
+.filters button:hover, button.secondary:hover {
     background: #f1f5fb;
 }
 
@@ -113,11 +118,20 @@ ul {
     overflow-wrap: anywhere;
 }
 
-.task input {
+.task input[type="checkbox"] {
     flex-shrink: 0;
     width: 18px;
     height: 18px;
     accent-color: #2556a6;
+}
+
+.task-edit {
+    width: 100%;
+}
+
+.task-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .task .completed span {
@@ -145,6 +159,10 @@ button.delete:hover {
     }
 
     .form-row {
+        flex-wrap: wrap;
+    }
+
+    .task {
         flex-wrap: wrap;
     }
 
