@@ -5,6 +5,7 @@ import Task from "./components/Task.jsx";
 
 function App() {
     const [tasks, setTasks] = useState([]);
+    const completedCount = tasks.filter((task) => task.completed).length;
 
     function addTask(title) {
         const newTask = {
@@ -33,7 +34,14 @@ function App() {
     return (
         <main>
             <h1>Task Manager</h1>
+            <div className="stats" aria-live="polite">
+                <span>Total sarcini: {tasks.length}</span>
+                <span>Finalizate: {completedCount}</span>
+            </div>
             <TaskForm onAddTask={addTask} />
+            {tasks.length === 0 && (
+                <p className="empty">Nu există sarcini momentan.</p>
+            )}
             <ul>
                 {tasks.map((task) => (
                     <Task
